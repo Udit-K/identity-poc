@@ -1,5 +1,6 @@
 /home/ukhanna/projects/identity-poc/bin/Debug/net5.0/appsettings.Development.json
 /home/ukhanna/projects/identity-poc/bin/Debug/net5.0/appsettings.json
+/home/ukhanna/projects/identity-poc/bin/Debug/net5.0/Properties/input.json
 /home/ukhanna/projects/identity-poc/bin/Debug/net5.0/identity-poc.StaticWebAssets.xml
 /home/ukhanna/projects/identity-poc/bin/Debug/net5.0/app.db
 /home/ukhanna/projects/identity-poc/bin/Debug/net5.0/identity-poc

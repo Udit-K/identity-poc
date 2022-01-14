@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using identity_poc.Data;
+using identity_poc.Models;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,9 @@ namespace identity_poc
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   var jsonString = File.ReadAllText("Properties/input.json");
+            List<IdentityProviderModel> identityProviders = Newtonsoft.Json.JsonConvert.DeserializeObject<List<IdentityProviderModel>>(jsonString);
+            IdentityProviderModel idp = identityProviders[0];
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -38,22 +42,22 @@ namespace identity_poc
 
             services.AddAuthentication()
             .AddCookie("cookie")
-            .AddSaml2p("duende", options => {
+            .AddSaml2p("cool app", options => {
                 options.Licensee = "DEMO";
-                options.LicenseKey = "";
-                
-                options.IdentityProviderMetadataAddress = "https://dev-411274.okta.com/app/exketzt7voh6Hec3K357/sso/saml/metadata";
-                options.RequireValidMetadataSignature = false;
-                options.TimeComparisonTolerance = 120;
+                options.LicenseKey = "eyJTb2xkRm9yIjowLjAsIktleVByZXNldCI6NiwiU2F2ZUtleSI6ZmFsc2UsIkxlZ2FjeUtleSI6ZmFsc2UsIlJlbmV3YWxTZW50VGltZSI6IjAwMDEtMDEtMDFUMDA6MDA6MDAiLCJhdXRoIjoiREVNTyIsImV4cCI6IjIwMjItMDEtMzBUMDE6MDA6MDAuNDk3MjA0NCswMDowMCIsImlhdCI6IjIwMjEtMTItMzFUMDE6MDA6MDAiLCJvcmciOiJERU1PIiwiYXVkIjoyfQ==.aiYeOa6e18f7YktrlXjl0ROWF7ni0NwbnqrGwww6kZC/OTCARa9yfbew7YAO9vhH4cyTFcr9o45VRWNpYL33m7JjCedWlaRbvx2yyMyHpvUCIzjgL927DXvQ9lu0UQOb6q8Fi5XyjCb1NqHoQdOhaO08h91Ip6A4OuiQjrpa4TsUg9QV0dcPqdPkkm1tEx14UG7X611NOch6kUDSL4IorTS3uBpGpCgj0UVwScTtyOYWweQK2/C1zZKvy6vZmx60Z6xYRws4YxqX+5y4p1fpyfcZ1ZFtCG0NFW1LpztYTgbiGodZoYzf3gd/MqdoCb/6uUfzOpGCBPjEuPvwqgFUgSL0lqSwdA2+z3vYDjKdBmI5T2f5lqglIig+BEvlSn2i0QL/foLh7EuckWOrFoKP08W4hFaFR/Z3XBXEtyNvxu1DpllrMWZjeRaa4WLkoaryGA0y2vvoFY4SstGljCDSuGJc2I6PoZ2SEb0x18Zip0aN7UllhprPlOijWGU/aYYLng+M87vLCZ940b+zp2dKsk9C3HMJB2nckV80YqlGIdXeRGW+vmiLPidJNhmsTdoJLauQ3KUpwxIinTkMuoVElO1Bv+CigNMgrshKY23PVAFw9A3z+FvbUg7EAXnce2RMLypguBceH5GSeMaG0+jqxam769yzztezJ+JFcQQorXc=";
+                options.IdentityProviderMetadataAddress = idp.IdentityProviderMetadataAddress;
+                options.RequireValidMetadataSignature = idp.RequireValidMetadataSignature;
+                options.TimeComparisonTolerance = idp.TimeComparisonTolerance;
+                var spo = idp.ServiceProviderOptions; 
                 options.ServiceProviderOptions = new SpOptions
                 {
-                    EntityId = "https://localhost:5001/saml",
-                    MetadataPath = "/saml/metadata",
-                    SignAuthenticationRequests = false
+                    EntityId = spo.EntityId,
+                    MetadataPath = spo.MetaDataPath,
+                    SignAuthenticationRequests = spo.SignAuthenticationRequests
                 };
-                options.NameIdClaimType = "sub";
-                options.CallbackPath = "/signin-saml";
-                options.SignInScheme = IdentityConstants.ExternalScheme;
+                options.NameIdClaimType = idp.NameIdClaimType;
+                options.CallbackPath = idp.CallbackPath;
+                options.SignInScheme = idp.SignInScheme;
 
             })
             .AddFacebook(facebookOptions =>

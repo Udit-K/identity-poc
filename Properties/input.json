@@ -1,0 +1,31 @@
+
+
+[ 
+  {
+    "IdentityProviderMetadataAddress": "https://dev-411274.okta.com/app/exketzt7voh6Hec3K357/sso/saml/metadata",
+    "RequireValidMetadataSignature": false,
+    "TimeComparisonTolerance": 120,
+    "ServiceProviderOptions": {
+      "EntityId" : "https://localhost:5001/saml",
+      "MetadataPath": "/saml/metadata",
+      "SignAuthenticationRequests": false
+    },
+    "nameIdClaimType" : "sub",
+    "callbackPath" : "/signin-saml",
+    "signInScheme" : "Identity.External"
+      
+  },
+  {
+    "IdentityProviderMetadataAddress": "https://dev-411274.okta.com/app/exkf50stuqlovMZFH357/sso/saml/metadata",
+    "RequireValidMetadataSignature": false,
+    "TimeComparisonTolerance": 120,
+    "ServiceProviderOptions": {
+      "EntityId" : "https://localhost:5001/saml",
+      "MetadataPath": "/saml/metadata",
+      "SignAuthenticationRequests": false
+    },
+    "nameIdClaimType" : "sub",
+    "callbackPath" : "/signin-saml",
+    "signInScheme" : "Identity.External"
+  }
+]
