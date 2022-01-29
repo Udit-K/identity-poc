@@ -1,0 +1,7 @@
+{
+    "Scheme": "saml",
+    "DisplayName": "SAML 2.0",
+    "Type": "saml2p",
+    "Enabled": "true",
+    "Properties": "{"SamlAuthenticationOptions":"{\"ServiceProviderOptions\":{\"EntityId\":\"https://localhost:5001/saml\"},\"IdentityProviderOptions\":{\"EntityId\":\"https://localhost:5000\",\"SingleSignOnEndpoint\":{\"Endpoint\":\"https://localhost:5000/saml/sso\",\"BindingType\":1}},\"CallbackPath\":\"/saml/acs\",\"SignInScheme\":\"local-cookie\"}"}"
+}

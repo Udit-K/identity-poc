@@ -102,3 +102,4 @@
 /home/ukhanna/projects/identity-poc/obj/Debug/net5.0/ref/identity-poc.dll
 /home/ukhanna/projects/identity-poc/obj/Debug/net5.0/identity-poc.pdb
 /home/ukhanna/projects/identity-poc/obj/Debug/net5.0/identity-poc.genruntimeconfig.cache
+/home/ukhanna/projects/identity-poc/bin/Debug/net5.0/Properties/idp.json
